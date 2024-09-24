@@ -43,7 +43,13 @@ const userSchema=new mongoose.Schema({
     courseProgress:[{
         type:mongoose.Schema.ObjectId,
         ref:"CourseProgress",
-    }]
+    }],
+    token:{
+        type:String
+    },
+    resetPasswordToken:{
+        type:Date
+    }
 
 })
 
