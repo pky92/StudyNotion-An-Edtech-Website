@@ -1,47 +1,59 @@
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
 
-const courseSchema=new mongoose.Schema({
-    title:{
-        type:String,
-        required:true,
+// Define the Courses schema
+const coursesSchema = new mongoose.Schema({
+	courseName: { type: String },
+	courseDescription: { type: String },
+	instructor: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "user",
+	},
+	whatYouWillLearn: {
+		type: String,
+	},
+	courseContent: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Section",
+		},
+	],
+	ratingAndReviews: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "RatingAndReview",
+		},
+	],
+	price: {
+		type: Number,
+	},
+	thumbnail: {
+		type: String,
+	},
+	tag: {
+		type: [String],
+		required: true,
+	},
+	category: {
+		type: mongoose.Schema.Types.ObjectId,
+		// required: true,
+		ref: "Category",
+	},
+	studentsEnrolled: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: "user",
+		},
+	],
+	instructions: {
+		type: [String],
+	},
+	status: {
+		type: String,
+		enum: ["Draft", "Published"],
+	},
+});
 
-    },
-    description:{
-        type:String,
-        required:true,
-    },
-    instructor:{
-        type:mongoose.Schema.ObjectId,
-        ref:"User",
-        required:true,
-    },
-    whatWillYouLearn:{
-        type:String,
-    },
-    price:{
-        type:Number,
-    },
-    courseContent:[{
-        type:mongoose.Schema.ObjectId,           //multiple sections are possible such as videos,notes,etc.
-        ref:"Section",
-    }],
-    ratingAndReviews:[{
-        type:mongoose.Schema.ObjectId,                      //courese canhave multiple rating and reviews
-        ref:"Rating",
-
-    }],
-    tag:{
-        type:mongoose.Schema.ObjectId,
-        ref:"Tag"
-    },
-    studentEnrolled:[{
-        type:mongoose.Schema.ObjectId,
-        ref:"User",
-        required:true,
-        
-    }]
-
-})
-
-
-module.exports=mongoose.model("Course",courseSchema);
+// Export the Courses model
+module.exports = mongoose.model("Course", coursesSchema);

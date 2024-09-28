@@ -1,19 +1,15 @@
-const mongoose=require('mongoose')
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-exports.dbConnect=()=>{
-
-    const dbUrl=process.env.DB_URL
-
-    mongoose.connect(dbUrl,{
+exports.connect = () => {
+    mongoose.connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
         useUnifiedTopology:true,
-        useNewUrlParser:true
-    }).then(()=>
-        console.log("Dartabase connected Successfully!!")
-
-    ).catch((err)=>{
-        console.error(err);
-        console.log("Error While establashing Connection with DB. ")
-        
     })
-}
+    .then(() => console.log("DB Connected Successfully"))
+    .catch( (error) => {
+        console.log("DB Connection Failed");
+        console.error(error);
+        process.exit(1);
+    } )
+};
